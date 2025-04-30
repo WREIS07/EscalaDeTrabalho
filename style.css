@@ -1,163 +1,149 @@
 body {
-    font-family: Arial, sans-serif;
-    background: #f7f7f7;
-    margin: 0;
-    padding: 20px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .calendar-container {
-    width: 100%;
-    max-width: 700px;  /* Limite máximo de largura */
-    margin: 0 auto;
-    background: white;
-    border-radius: 10px;
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.calendar-container {
+  width: 100%;
+  max-width: 700px; /* Limite máximo de largura */
+  margin: 0 auto;
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+header h1 {
+  font-size: 1.5em;
+  word-wrap: break-word; /* Quebra o texto se necessário */
+}
+
+header button {
+  font-size: 1.2em;
+  padding: 5px 15px;
+  background-color: #ddd;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.weekdays, .days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 5px;
+}
+
+.weekdays div {
+  font-weight: bold;
+  background-color: #eee;
+  padding: 10px 0;
+}
+
+.days div {
+  padding: 15px 5px;
+  border: 1px solid #ddd;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  word-wrap: break-word;
+}
+
+.work {
+  background-color: #ff9999;
+}
+
+.rest {
+  background-color: #99e699;
+}
+
+/* Responsividade - ajustes para telas menores */
+@media (max-width: 320px) {
+  body {
     padding: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    overflow: hidden;
-    box-sizing: border-box; /* Faz com que o padding não ultrapasse a largura */
   }
-  
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+
+  .calendar-container {
+    padding: 5px;
   }
-  
+
   header h1 {
-    font-size: 1.5em;
-    word-wrap: break-word; /* Quebra o texto se necessário */
+    font-size: 1.2em;
   }
-  
+
+  header button {
+    font-size: 1em;
+    padding: 5px 10px;
+  }
+
+  .days div {
+    padding: 8px 5px;
+    font-size: 0.8em;
+    height: auto;
+  }
+}
+
+@media (max-width: 375px) {
+  body {
+    padding: 10px;
+  }
+
+  .calendar-container {
+    padding: 5px;
+  }
+
+  header h1 {
+    font-size: 1.3em;
+  }
+
+  header button {
+    font-size: 1.1em;
+    padding: 5px 12px;
+  }
+
+  .days div {
+    padding: 10px 5px;
+    font-size: 0.9em;
+    height: auto;
+  }
+}
+
+@media (max-width: 425px) {
+  body {
+    padding: 15px;
+  }
+
+  .calendar-container {
+    padding: 10px;
+  }
+
+  header h1 {
+    font-size: 1.4em;
+  }
+
   header button {
     font-size: 1.2em;
-    padding: 5px 15px;
-    background-color: #ddd;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 7px 14px;
   }
-  
-  .weekdays, .days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-gap: 5px;
-  }
-  
-  .weekdays div {
-    font-weight: bold;
-    background-color: #eee;
-    padding: 10px 0;
-  }
-  
+
   .days div {
-    padding: 15px 5px;
-    border: 1px solid #ddd;
-    height: 70px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    word-wrap: break-word;
-  }
-  
-  .work {
-    background-color: #ff9999;
-  }
-  
-  .rest {
-    background-color: #99e699;
-  }
-  
-  /* Responsividade - ajustes para telas menores */
-  @media (max-width: 320px) {
-    .calendar-container {
-      padding: 5px;
-    }
-  
-    header h1 {
-      font-size: 1.2em;
-    }
-  
-    header button {
-      font-size: 1em;
-      padding: 5px 10px;
-    }
-  
-    .days div {
-      padding: 10px 5px;
-      font-size: 0.8em;
-      height: auto;
-    }
-  }
-  
-  @media (max-width: 375px) {
-    .calendar-container {
-      padding: 5px;
-    }
-  
-    header h1 {
-      font-size: 1.3em;
-    }
-  
-    header button {
-      font-size: 1.1em;
-      padding: 5px 12px;
-    }
-  
-    .days div {
-      padding: 12px 5px;
-      font-size: 0.9em;
-      height: auto;
-    }
-  }
-  
-  @media (max-width: 425px) {
-    .calendar-container {
-      padding: 10px;
-    }
-  
-    header h1 {
-      font-size: 1.4em;
-    }
-  
-    header button {
-      font-size: 1.2em;
-      padding: 7px 14px;
-    }
-  
-    .days div {
-      padding: 13px 5px;
-      font-size: 0.95em;
-      height: auto;
-    }
-  }
-  
-  /* Responsividade - ajuste para tablets */
-  @media (max-width: 728px) {
-    .calendar-container {
-      padding: 15px;
-    }
-  
-    header h1 {
-      font-size: 1.5em;
-    }
-  
-    header button {
-      font-size: 1.3em;
-      padding: 8px 15px;
-    }
-  
-    .days div {
-      padding: 14px 5px;
-      font-size: 1em;
-      height: auto;
-    }
-  }
-  
-  
+    padding: 12px 5px;
+    font-size: 0.95
