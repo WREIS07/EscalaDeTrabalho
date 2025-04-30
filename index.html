@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Escala de Trabalho</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+    .calendar {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 10px;
+    }
+    .header {
+      text-align: center;
+      font-size: 1.5em;
+      font-weight: bold;
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      background: #f0f0f0;
+      font-weight: bold;
+      text-align: center;
+    }
+    .day {
+      border: 1px solid #ccc;
+      height: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .work {
+      background-color: #f88;
+    }
+    .off {
+      background-color: #8f8;
+    }
+    .today {
+      border-bottom: 4px solid black;
+    }
+    button {
+      background-color: #eee;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="calendar">
+    <div class="header">
+      <button onclick="changeMonth(-1)">←</button>
+      <div id="monthYear"></div>
+      <button onclick="changeMonth(1)">→</button>
+    </div>
+    <div class="days" id="weekdays">
+      <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+    </div>
+    <div class="days" id="calendarDays"></div>
+  </div>
+
+  <script>
+    const calendarDays = document.getElementById("calendarDays");
+    const monthYear = document.getElementById("monthYear");
+
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+
+    const startDate = new Date(2025, 3, 28); // 28/04/2025 - início da referência
+
+    function renderCalendar(month, year) {
+      calendarDays.innerHTML = "";
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      const today = new Date();
+      const todayDate = today.getDate();
+      const todayMonth = today.getMonth();
+      const todayYear = today.getFullYear();
+
+      monthYear.textContent = `${new Date(year, month).toLocaleString("pt-BR", { month: "long" })} ${year}`;
+
+      for (let i = 0; i < firstDay; i++) {
+        const emptyCell = document.createElement("div");
+        emptyCell.classList.add("day");
+        calendarDays.appendChild(emptyCell);
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(year, month, day);
+        const dayCell = document.createElement("div");
+        dayCell.classList.add("day");
+
+        const diffInDays = Math.floor((date - startDate) / (1000 * 60 * 60 * 24));
+        const weekIndex = Math.floor(diffInDays / 7);
+        const isWeekA = weekIndex % 2 === 0;
+        const weekday = date.getDay(); // 0 = Dom, ..., 6 = Sáb
+
+        let trabalha = false;
+
+        if (isWeekA) {
+          trabalha = [0,1,2,5,6].includes(weekday); // Semana A
+        } else {
+          trabalha = [3,4].includes(weekday); // Semana B
+        }
+
+        dayCell.classList.add(trabalha ? "work" : "off");
+        dayCell.innerHTML = `<div>${day}</div><div>${trabalha ? "Trabalha" : "Folga"}</div>`;
+
+        if (day === todayDate && month === todayMonth && year === todayYear) {
+          dayCell.classList.add("today");
+        }
+
+        calendarDays.appendChild(dayCell);
+      }
+    }
+
+    function changeMonth(delta) {
+      currentMonth += delta;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      } else if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+      renderCalendar(currentMonth, currentYear);
+    }
+
+    renderCalendar(currentMonth, currentYear);
+  </script>
+</body>
+</html>
