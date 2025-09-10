@@ -113,9 +113,9 @@
         let trabalha = false;
 
         if (isWeekA) {
-          trabalha = [0,1,2,5,6].includes(weekday); // Semana A
+          trabalha = ![0,1,2,5,6].includes(weekday); // Semana A
         } else {
-          trabalha = [3,4].includes(weekday); // Semana B
+          trabalha = ![3,4].includes(weekday); // Semana B
         }
 
         dayCell.classList.add(trabalha ? "work" : "off");
@@ -145,3 +145,4 @@
   </script>
 </body>
 </html>
+
